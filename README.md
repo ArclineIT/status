@@ -53,3 +53,7 @@ incidents:
 - `history.html` — past incidents (90-day window)
 
 See [todo.md](todo.md) for the full task list.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
