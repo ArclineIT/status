@@ -1,0 +1,97 @@
+<% content_for :title, "Admin — #{Rails.configuration.x.status.title}" %>
+
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow">Admin</p>
+    <h1 class="page-header__title">Status admin</h1>
+    <p class="lead">What you change here shows on the <%= link_to "public page", root_path %> straight away.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="dash">
+      <div class="dash-actions dash-actions--row">
+        <%= link_to "Open incident", new_admin_incident_path, class: "btn btn--primary btn--sm" %>
+        <%= link_to "Schedule maintenance", new_admin_maintenance_path, class: "btn btn--ghost btn--sm" %>
+      </div>
+
+      <section class="dash-section">
+        <h2 class="dash-section__title">components</h2>
+        <div class="panel">
+          <div class="panel__body">
+            <% @components.each do |component| %>
+              <div class="status-row">
+                <span class="status-row__label"><%= component.name %></span><span class="status-row__dots" aria-hidden="true"></span>
+                <%= form_with model: [ :admin, component ] do |form| %>
+                  <%= form.label :status, "Status of #{component.name}", class: "visually-hidden" %>
+                  <%= form.select :status, Component::STATUSES.invert.to_a %>
+                  <%= form.submit "Set", class: "btn btn--ghost btn--sm" %>
+                <% end %>
+                <%= button_to "Remove", admin_component_path(component), method: :delete, class: "btn btn--danger btn--sm",
+                      data: { turbo_confirm: "Remove #{component.name} from the status page?" } %>
+              </div>
+            <% end %>
+
+            <%= form_with model: [ :admin, @component ], class: "form form--inline" do |form| %>
+              <div class="field">
+                <%= form.label :name, "New component" %>
+                <%= form.text_field :name, required: true, placeholder: "Shared Hosting" %>
+              </div>
+              <%= form.submit "Add component", class: "btn btn--ghost" %>
+            <% end %>
+          </div>
+        </div>
+      </section>
+
+      <section class="dash-section">
+        <h2 class="dash-section__title">incidents</h2>
+        <div class="panel">
+          <% if @incidents.any? %>
+            <div class="table-wrap">
+              <table class="inv-table">
+                <thead>
+                  <tr>
+                    <th class="inv-table__th">Incident</th>
+                    <th class="inv-table__th">Status</th>
+                    <th class="inv-table__th">Severity</th>
+                    <th class="inv-table__th">Started</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @incidents.each do |incident| %>
+                    <tr class="inv-table__row">
+                      <td class="inv-table__td"><%= link_to incident.title, admin_incident_path(incident) %></td>
+                      <td class="inv-table__td"><span class="status-badge status-badge--<%= state_class(incident.status) %>"><%= incident.status %></span></td>
+                      <td class="inv-table__td inv-table__td--muted"><%= incident.severity %></td>
+                      <td class="inv-table__td inv-table__td--muted"><%= format_time incident.started_at %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% else %>
+            <div class="panel__body"><p class="dash-empty">No incidents recorded.</p></div>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="dash-section">
+        <h2 class="dash-section__title">maintenance</h2>
+        <div class="panel">
+          <div class="panel__body">
+            <% @maintenances.each do |maintenance| %>
+              <div class="status-row">
+                <span class="status-row__label"><%= maintenance.title %></span><span class="status-row__dots" aria-hidden="true"></span>
+                <span class="status-row__value"><%= format_time maintenance.starts_at %></span>
+                <span class="status-badge status-badge--<%= state_class(maintenance.status) %>"><%= maintenance.status.humanize.downcase %></span>
+                <%= button_to "Remove", admin_maintenance_path(maintenance), method: :delete, class: "btn btn--danger btn--sm" %>
+              </div>
+            <% end %>
+            <% if @maintenances.empty? %><p class="dash-empty">Nothing scheduled.</p><% end %>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+upgrade:
+  title: NVMe storage upgrade
+  body: Brief VPS downtime expected.
+  starts_at: <%= 3.days.from_now.to_fs(:db) %>
+  ends_at: <%= (3.days.from_now + 2.hours).to_fs(:db) %>
+
+done:
+  title: Kernel patching
+  starts_at: <%= 5.days.ago.to_fs(:db) %>
+  ends_at: <%= (5.days.ago + 1.hour).to_fs(:db) %>

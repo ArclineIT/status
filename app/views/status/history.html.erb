@@ -1,0 +1,2 @@
+<% content_for :title, "Incident history — #{Rails.configuration.x.status.title}" %>
+<%= render "status/history", incidents: @incidents, maintenances: @maintenances %>

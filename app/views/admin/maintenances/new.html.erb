@@ -1,0 +1,35 @@
+<% content_for :title, "Schedule maintenance — #{Rails.configuration.x.status.title}" %>
+
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow"><%= link_to "Admin", admin_root_path %></p>
+    <h1 class="page-header__title">Schedule maintenance</h1>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <%= form_with model: [ :admin, @maintenance ], class: "form" do |form| %>
+      <%= form_errors @maintenance %>
+      <div class="field">
+        <%= form.label :title %>
+        <%= form.text_field :title, required: true, placeholder: "NVMe storage upgrade" %>
+      </div>
+      <div class="form__row">
+        <div class="field">
+          <%= form.label :starts_at, "Starts (#{Time.zone.name})" %>
+          <%= form.datetime_local_field :starts_at, required: true %>
+        </div>
+        <div class="field">
+          <%= form.label :ends_at, "Ends (#{Time.zone.name})" %>
+          <%= form.datetime_local_field :ends_at, required: true %>
+        </div>
+      </div>
+      <div class="field">
+        <%= form.label :body, "What to expect" %>
+        <%= form.text_area :body, rows: 4, placeholder: "Brief VPS downtime expected during storage migration." %>
+      </div>
+      <%= form.submit "Schedule", class: "btn btn--primary" %>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+# Example configuration in the format of the original arcline-status generator.
+# Load it with: bin/rails 'status:import[status.example.yaml]'
+# The page title comes from STATUS_TITLE.
+
+components:
+  - name: "Shared Hosting"
+    status: operational        # operational | degraded | outage | maintenance
+  - name: "VPS Hosting"
+    status: operational
+  - name: "Control Panel"
+    status: operational
+  - name: "DNS / Nameservers"
+    status: operational
+  - name: "SSL Provisioning"
+    status: operational
+  - name: "Network"
+    status: operational
+
+incidents:
+  - title: "Brief network disruption"
+    status: resolved           # investigating | identified | monitoring | resolved
+    severity: minor            # minor | major | critical
+    started: "2026-02-28T14:00:00Z"
+    resolved: "2026-02-28T15:30:00Z"
+    updates:
+      - time: "2026-02-28T14:00:00Z"
+        body: "Investigating reports of connectivity issues."
+      - time: "2026-02-28T15:30:00Z"
+        body: "Issue resolved. Root cause: upstream BGP flap."
+
+maintenance:
+  - title: "NVMe storage upgrade"
+    starts: "2026-03-10T02:00:00Z"
+    ends: "2026-03-10T04:00:00Z"
+    body: "Brief VPS downtime expected during storage migration."

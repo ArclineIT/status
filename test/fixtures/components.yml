@@ -1,0 +1,9 @@
+hosting:
+  name: Shared Hosting
+  status: operational
+  position: 0
+
+dns:
+  name: DNS
+  status: operational
+  position: 1

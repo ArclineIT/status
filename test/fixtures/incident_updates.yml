@@ -1,0 +1,11 @@
+blip_start:
+  incident: resolved_blip
+  status: investigating
+  body: Investigating reports of connectivity issues.
+  posted_at: <%= 10.days.ago.to_fs(:db) %>
+
+blip_end:
+  incident: resolved_blip
+  status: resolved
+  body: "Issue resolved. Root cause: upstream BGP flap."
+  posted_at: <%= (10.days.ago + 90.minutes).to_fs(:db) %>

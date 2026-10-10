@@ -1,0 +1,37 @@
+<% content_for :title, "#{@incident.title} — #{Rails.configuration.x.status.title}" %>
+
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow"><%= link_to "Admin", admin_root_path %></p>
+    <h1 class="page-header__title page-header__title--article"><%= @incident.title %></h1>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="dash">
+      <%= render "status/incident", incident: @incident %>
+
+      <section class="dash-section">
+        <h2 class="dash-section__title">post an update</h2>
+        <%= form_with scope: :incident_update, url: post_update_admin_incident_path(@incident), class: "form" do |form| %>
+          <div class="field">
+            <%= form.label :status %>
+            <%= form.select :status, Incident::STATUSES.map { |s| [ s.capitalize, s ] }, selected: @incident.resolved? ? "resolved" : @incident.status %>
+            <p class="field__hint">Choosing “Resolved” closes the incident and moves it to the history page.</p>
+          </div>
+          <div class="field">
+            <%= form.label :body, "Update" %>
+            <%= form.text_area :body, required: true, rows: 4 %>
+          </div>
+          <%= form.submit "Post update", class: "btn btn--primary" %>
+        <% end %>
+      </section>
+
+      <div class="dash-actions">
+        <%= button_to "Delete incident", admin_incident_path(@incident), method: :delete, class: "btn btn--danger btn--sm",
+              data: { turbo_confirm: "Delete this incident and its updates?" } %>
+      </div>
+    </div>
+  </div>
+</section>

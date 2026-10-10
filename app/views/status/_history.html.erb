@@ -1,0 +1,36 @@
+<%# locals: (incidents:, maintenances:) %>
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow">Status</p>
+    <h1 class="page-header__title">Incident history</h1>
+    <p class="lead">Resolved incidents from the last <%= Incident::HISTORY_WINDOW.in_days.to_i %> days.</p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="dash">
+      <% if incidents.any? %>
+        <div class="incidents"><%= render partial: "status/incident", collection: incidents %></div>
+      <% else %>
+        <p class="dash-empty">No incidents in this period.</p>
+      <% end %>
+
+      <% if maintenances.any? %>
+        <section class="dash-section">
+          <h2 class="dash-section__title">past maintenance</h2>
+          <div class="panel">
+            <div class="panel__body">
+              <% maintenances.each do |maintenance| %>
+                <div class="status-row">
+                  <span class="status-row__label"><%= maintenance.title %></span><span class="status-row__dots" aria-hidden="true"></span>
+                  <span class="status-row__value"><%= format_time maintenance.starts_at %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </section>
+      <% end %>
+    </div>
+  </div>
+</section>

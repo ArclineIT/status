@@ -1,0 +1,54 @@
+<%# locals: (page:) %>
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow">Status</p>
+    <h1 class="page-header__title"><span class="status-dot status-dot--<%= state_class(page.state) %>" aria-hidden="true"></span><%= page.headline %></h1>
+    <p class="lead">Updated <%= format_time page.generated_at %></p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="dash">
+      <% if page.incidents.any? %>
+        <section class="dash-section">
+          <h2 class="dash-section__title">active incidents</h2>
+          <div class="incidents"><%= render partial: "status/incident", collection: page.incidents %></div>
+        </section>
+      <% end %>
+
+      <% if page.maintenances.any? %>
+        <section class="dash-section">
+          <h2 class="dash-section__title">scheduled maintenance</h2>
+          <div class="incidents">
+            <% page.maintenances.each do |maintenance| %>
+              <article class="incident">
+                <header class="incident__header">
+                  <h3 class="incident__title"><%= maintenance.title %></h3>
+                  <span class="status-badge status-badge--<%= state_class(maintenance.status(page.generated_at)) %>"><%= maintenance.status(page.generated_at).humanize.downcase %></span>
+                </header>
+                <p class="cell-note"><%= format_time maintenance.starts_at %> to <%= format_time maintenance.ends_at %></p>
+                <%= simple_format maintenance.body if maintenance.body.present? %>
+              </article>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+
+      <section class="dash-section">
+        <h2 class="dash-section__title">components</h2>
+        <div class="panel">
+          <div class="panel__body">
+            <% page.components.each do |component| %>
+              <div class="status-row">
+                <span class="status-row__label"><%= component.name %></span><span class="status-row__dots" aria-hidden="true"></span>
+                <span class="status-badge status-badge--<%= state_class(component.status) %>"><%= component.status_label %></span>
+              </div>
+            <% end %>
+            <% if page.components.empty? %><p class="dash-empty">No components have been set up yet.</p><% end %>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>

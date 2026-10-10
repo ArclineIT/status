@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><%= Rails.configuration.x.status.title %></title>
+  <id><%= Rails.configuration.x.status.base_url %>/</id>
+  <link href="<%= Rails.configuration.x.status.base_url %>/"/>
+  <link rel="self" href="<%= Rails.configuration.x.status.base_url %>/feed.xml"/>
+  <updated><%= (@incidents.map(&:updated_at).max || Time.current).utc.iso8601 %></updated>
+<% @incidents.each do |incident| %>
+  <entry>
+    <title>[<%= incident.status %>] <%= incident.title %></title>
+    <id><%= Rails.configuration.x.status.base_url %>/incidents/<%= incident.id %></id>
+    <link href="<%= Rails.configuration.x.status.base_url %>/<%= "history" if incident.resolved? %>"/>
+    <updated><%= incident.updated_at.utc.iso8601 %></updated>
+    <author><name><%= Rails.configuration.x.status.title %></name></author>
+    <content type="text"><%= incident.updates.map { |update| "#{update.posted_at.utc.strftime('%Y-%m-%d %H:%M UTC')} #{update.status}: #{update.body}" }.join("\n") %></content>
+  </entry>
+<% end %>
+</feed>

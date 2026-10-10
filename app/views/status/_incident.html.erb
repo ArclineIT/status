@@ -1,0 +1,20 @@
+<%# locals: (incident:) %>
+<article class="incident">
+  <header class="incident__header">
+    <h3 class="incident__title"><%= incident.title %></h3>
+    <span class="status-badge status-badge--<%= state_class(incident.status) %>"><%= incident.status %></span>
+    <span class="status-badge status-badge--<%= state_class(incident.severity) %>"><%= incident.severity %></span>
+  </header>
+  <p class="cell-note">
+    Started <%= format_time incident.started_at %><% if incident.resolved? && incident.resolved_at %> · resolved after <%= humanize_duration incident.duration %><% end %>
+  </p>
+  <ol class="incident__updates">
+    <% incident.updates.each do |update| %>
+      <li>
+        <strong><%= update.status.capitalize %></strong>
+        <time datetime="<%= update.posted_at.utc.iso8601 %>"><%= format_time update.posted_at %></time>
+        <%= simple_format update.body %>
+      </li>
+    <% end %>
+  </ol>
+</article>

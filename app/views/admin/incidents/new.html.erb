@@ -1,0 +1,35 @@
+<% content_for :title, "Open incident — #{Rails.configuration.x.status.title}" %>
+
+<section class="page-header">
+  <div class="container">
+    <p class="eyebrow"><%= link_to "Admin", admin_root_path %></p>
+    <h1 class="page-header__title">Open an incident</h1>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <%= form_with model: [ :admin, @incident ], class: "form" do |form| %>
+      <div class="field">
+        <%= form.label :title %>
+        <%= form.text_field :title, required: true, placeholder: "Brief network disruption" %>
+      </div>
+      <div class="form__row">
+        <div class="field">
+          <%= form.label :severity %>
+          <%= form.select :severity, Incident::SEVERITIES.map { |s| [ s.capitalize, s ] } %>
+        </div>
+        <div class="field">
+          <%= form.label :status %>
+          <%= form.select :status, (Incident::STATUSES - [ "resolved" ]).map { |s| [ s.capitalize, s ] } %>
+        </div>
+      </div>
+      <div class="field">
+        <%= form.label :body, "First update" %>
+        <%= form.text_area :body, required: true, rows: 4, value: params.dig(:incident, :body), placeholder: "Investigating reports of connectivity issues." %>
+        <p class="field__hint">Remember to set the affected components on the admin page too.</p>
+      </div>
+      <%= form.submit "Open incident", class: "btn btn--primary" %>
+    <% end %>
+  </div>
+</section>

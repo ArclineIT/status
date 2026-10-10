@@ -1,0 +1,13 @@
+resolved_blip:
+  title: Brief network disruption
+  status: resolved
+  severity: minor
+  started_at: <%= 10.days.ago.to_fs(:db) %>
+  resolved_at: <%= (10.days.ago + 90.minutes).to_fs(:db) %>
+
+ancient:
+  title: Old outage
+  status: resolved
+  severity: critical
+  started_at: <%= 200.days.ago.to_fs(:db) %>
+  resolved_at: <%= 199.days.ago.to_fs(:db) %>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title><%= @title %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#05122C">
+    <%# Everything is inlined so each page is one self-contained file. %>
+    <style><%= raw @css %></style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="logo" href="index.html" aria-label="Status home">
+          <%= render "shared/logo", size: 28 %>
+          <span class="logo__word">Arcline</span>
+        </a>
+        <span class="site-header__tag">Status</span>
+        <nav class="nav" aria-label="Main">
+          <a class="nav__link" href="index.html">Current status</a>
+          <a class="nav__link" href="history.html">History</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main"><%= yield %></main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__bottom">
+          <p>&copy; <%= Date.current.year %> Arcline IT LLC</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
