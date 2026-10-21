@@ -77,7 +77,7 @@ itself. Run it from cron or after each change.
 ```nginx
 server {
     listen 443 ssl;
-    server_name status.arclineit.com;
+    server_name status.arcline.it;
     root /var/www/status;
     index index.html;
 }
@@ -90,7 +90,7 @@ server {
 | `PORT` | `3000` | HTTP listen port |
 | `DATABASE_PATH` | `storage/<env>.sqlite3` | SQLite database file |
 | `STATUS_TITLE` | `Arcline Status` | Page title |
-| `STATUS_BASE_URL` | `https://status.arclineit.com` | Public address, used in the feed |
+| `STATUS_BASE_URL` | `https://status.arcline.it` | Public address, used in the feed |
 | `STATUS_USERNAME` | — | Admin username (HTTP basic auth) |
 | `STATUS_PASSWORD` | — | Admin password |
 

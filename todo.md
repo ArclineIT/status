@@ -1,7 +1,7 @@
 # arcline-status — Status Page
 
 The state of each service, incidents with updates, scheduled maintenance and
-history. Self-hosted at status.arclineit.com.
+history. Self-hosted at status.arcline.it.
 
 ## Stack
 - Ruby on Rails 8.1 + SQLite
