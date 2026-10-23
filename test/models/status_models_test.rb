@@ -5,7 +5,7 @@ class StatusModelsTest < ActiveSupport::TestCase
     assert_equal "operational", Component.overall
     components(:dns).update!(status: "maintenance")
     assert_equal "maintenance", Component.overall
-    components(:hosting).update!(status: "degraded")
+    components(:portal).update!(status: "degraded")
     assert_equal "degraded", Component.overall
     components(:dns).update!(status: "outage")
     assert_equal "outage", Component.overall
@@ -13,7 +13,7 @@ class StatusModelsTest < ActiveSupport::TestCase
   end
 
   test "a component needs a unique name and a known status" do
-    assert_not Component.new(name: "Shared Hosting").valid?
+    assert_not Component.new(name: "Client Portal").valid?
     assert_not Component.new(name: "X", status: "on fire").valid?
   end
 

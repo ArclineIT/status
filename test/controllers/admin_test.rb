@@ -16,7 +16,7 @@ class AdminTest < ActionDispatch::IntegrationTest
     assert_equal 2, Component.find_by!(name: "Email").position
 
     assert_difference -> { Component.count }, -1 do
-      delete admin_component_path(components(:hosting))
+      delete admin_component_path(components(:portal))
     end
   end
 

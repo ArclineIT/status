@@ -10,7 +10,7 @@ class ConfigImportTest < ActiveSupport::TestCase
     counts = ConfigImport.new(@config).call
 
     assert_equal({ components: 6, incidents: 1, maintenances: 1 }, counts)
-    assert_equal [ "Shared Hosting", "VPS Hosting", "Control Panel", "DNS / Nameservers", "SSL Provisioning", "Network" ], Component.ordered.map(&:name)
+    assert_equal [ "Client Portal", "Billing", "Threat Monitoring", "DNS / Nameservers", "Email", "Network" ], Component.ordered.map(&:name)
 
     incident = Incident.sole
     assert_equal [ "Brief network disruption", "resolved", "minor" ], incident.values_at(:title, :status, :severity)
@@ -29,7 +29,7 @@ class ConfigImportTest < ActiveSupport::TestCase
     assert_no_difference [ -> { Component.count }, -> { Incident.count }, -> { IncidentUpdate.count }, -> { Maintenance.count } ] do
       ConfigImport.new(@config).call
     end
-    assert_equal "degraded", Component.find_by!(name: "Shared Hosting").status
+    assert_equal "degraded", Component.find_by!(name: "Client Portal").status
   end
 
   test "a bad value anywhere rolls the whole import back" do
