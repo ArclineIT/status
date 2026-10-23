@@ -1,4 +1,4 @@
-# One thing customers depend on, such as "Shared Hosting" or "DNS".
+# One thing customers depend on, such as "Client Portal" or "DNS".
 class Component < ApplicationRecord
   STATUSES = {
     "operational" => "Operational", "degraded" => "Degraded performance", "outage" => "Outage", "maintenance" => "Under maintenance"

@@ -6,7 +6,7 @@ class StatusControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", /All systems operational/
-    assert_select ".status-row__label", text: "Shared Hosting"
+    assert_select ".status-row__label", text: "Client Portal"
     assert_select ".incident__title", text: "NVMe storage upgrade"
     assert_select ".incident__title", text: "Kernel patching", count: 0
     assert_select "a[href^='/admin']", count: 0

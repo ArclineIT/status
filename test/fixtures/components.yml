@@ -1,5 +1,5 @@
-hosting:
-  name: Shared Hosting
+portal:
+  name: Client Portal
   status: operational
   position: 0
 

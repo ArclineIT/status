@@ -3,15 +3,15 @@
 # The page title comes from STATUS_TITLE.
 
 components:
-  - name: "Shared Hosting"
+  - name: "Client Portal"
     status: operational        # operational | degraded | outage | maintenance
-  - name: "VPS Hosting"
+  - name: "Billing"
     status: operational
-  - name: "Control Panel"
+  - name: "Threat Monitoring"
     status: operational
   - name: "DNS / Nameservers"
     status: operational
-  - name: "SSL Provisioning"
+  - name: "Email"
     status: operational
   - name: "Network"
     status: operational
@@ -32,4 +32,4 @@ maintenance:
   - title: "NVMe storage upgrade"
     starts: "2026-03-10T02:00:00Z"
     ends: "2026-03-10T04:00:00Z"
-    body: "Brief VPS downtime expected during storage migration."
+    body: "Brief client portal downtime expected during storage migration."
